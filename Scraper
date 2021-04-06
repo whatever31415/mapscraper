@@ -1,0 +1,25 @@
+from selenium import webdriver
+
+#Variables
+ime_grada = input("Unesi ime grada: ")
+vrsta_radnje = input("Unesi vrstu prodavnice: ")
+
+print("Loading the browser...")
+chrome_path = "C:\Program Files (x86)\chromedriver.exe"
+url = "https://www.google.com/maps/search/" + vrsta_radnje + "+in+" + ime_grada
+browser = webdriver.Chrome(chrome_path)
+browser.get(url)
+n = 0
+elements = browser.find_elements_by_class_name("place-result-container-place-link")
+grad = open(ime_grada + " "+ vrsta_radnje + ".txt", "w")
+
+for text in elements:
+    names = elements[n].get_attribute("aria-label")
+    grad.write(names + '\n')
+    print(names)
+    n += 1
+    
+grad.close()    
+
+#Sad ukucas ime grada
+#Zatim vrstu radnje(bar, grocery, fastfood...)
